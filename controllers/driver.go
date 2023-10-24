@@ -12,7 +12,7 @@ import (
 var validat = validator.New()
 
 func CreateDriver(c *gin.Context) {
-	var driver models.Driver
+	var driver models.Input
 	if err := c.Bind(&driver); err != nil {
 		c.JSON(400, gin.H{
 			"error": "failed to get data",
@@ -26,7 +26,17 @@ func CreateDriver(c *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Create(&driver).Error; err != nil {
+	if err := database.DB.Create(&models.Driver{
+		Name: driver.Name,
+		LastName: driver.LastName,
+		PhoneNumber: driver.PhoneNumber,
+		Email: driver.Email,
+		BirthDate: driver.BirthDate,
+		DriverImg:driver.DriverImg,
+        Gender: driver.Gender,
+		Qualifications: driver.Qualifications,
+		Expirience: driver.Expirience,
+	}).Error; err != nil {
 		c.JSON(500, gin.H{
 			"error": "failed to add detailes in database",
 		})
