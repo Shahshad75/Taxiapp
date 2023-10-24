@@ -56,6 +56,7 @@ func GetDriverDetail(c *gin.Context) {
 		})
 		return
 	}
+	
 	c.JSON(200,gin.H{
 		"driver":driver,
 	})
