@@ -20,5 +20,5 @@ func ConnectToDatabase() {
 	}
 	DB.AutoMigrate(&models.Driver{})
 	DB.AutoMigrate(&models.VehicleDetails{})
-	DB.AutoMigrate(&models.DriverDocument{})
+	DB.AutoMigrate(&models.DriverDocuments{})
 }

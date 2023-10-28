@@ -1,12 +1,12 @@
 package models
 
 type VehicleDetails struct {
-	VehicleId int    `json:"id" gorm:"primaryKey;unique"`
-	DriverId  int    `json:"driverid"`
-	CarBrand  string `json:"car_brand" gorm:"not null"`
-	CarModel  string `json:"car_model" gorm:"not null"`
-	CarYear   string `json:"car_year" gorm:"not null"`
-	CarColor  string `json:"car_color" gorm:"not null"`
-	CarSeat   string `json:"car_seat" gorm:"not null"`
-	CarNumber string `json:"car_number" grom:"not null"`
+	DetilsID      int    `json:"detils_id" gorm:"primaryKey;unique"`
+	UserID        int    `json:"user_id"`
+	VehicleBrand  string `json:"vehicle_brand" gorm:"not null"`
+	VehicleModel  string `json:"vehicle_model" gorm:"not null"`
+	VehicleYear   string `json:"vehicle_year" gorm:"not null"`
+	VehicleColor  string `json:"vehicle_color" gorm:"not null"`
+	VehicleSeat   string `json:"vehicle_seat" gorm:"not null"`
+	VehicleNumber string `json:"vehicle_number" grom:"not null"`
 }
