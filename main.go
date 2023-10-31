@@ -20,5 +20,6 @@ func init() {
 func main() {
 	router := gin.Default()
 	routes.DriverRouter(router)
+	routes.AdminRouter(router)
 	router.Run(":8080")
 }

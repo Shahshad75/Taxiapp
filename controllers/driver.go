@@ -26,7 +26,7 @@ func AddDriver(c *gin.Context) {
 		})
 		return
 	}
-
+	driver.Status = "pending"
 	if err := database.DB.Create(&driver).Error; err != nil {
 		c.JSON(500, gin.H{
 			"error": "failed to add detailes in database",
@@ -92,3 +92,6 @@ func GetDriverDetail(c *gin.Context) {
 		"driver": driver,
 	})
 }
+
+
+

@@ -12,4 +12,6 @@ func DriverRouter(r *gin.Engine) {
 	r.POST("/addvehicledetails", controllers.AddVehicleDetails)
 	r.GET("/driverdetail/:driver_id", controllers.GetDriverDetail)
 
+
+
 }
