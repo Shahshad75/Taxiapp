@@ -1,14 +1,53 @@
 package controllers
 
 import (
+	"net/http"
+	"os"
 	"strconv"
 	"taxiapp/database"
+	"taxiapp/helper"
 	"taxiapp/models"
 
 	"github.com/gin-gonic/gin"
 )
 
-//Login
+// Login
+func AdminLogin(c *gin.Context) {
+	var credentials struct {
+		Username string `json:"username"`
+		Password string ` json:"password"`
+	}
+
+	if err := c.Bind(&credentials); err != nil {
+		c.JSON(400, gin.H{
+			"error": "failed to bind",
+		})
+		return
+	}
+	username := os.Getenv("USER_NAME")
+	password := os.Getenv("PASSWORD")
+	if username != credentials.Username && password != credentials.Password {
+		c.JSON(400, gin.H{
+			"error": "incorrect username or password",
+		})
+		return
+	}
+	token, err := helper.GenerateJWTToken(password)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"error": "Failed to generate token",
+		})
+		return
+	}
+	//set token into browser
+	c.SetSameSite(http.SameSiteLaxMode)
+	c.SetCookie("jwt_admin", token, 3600*24*30, "", "", true, true)
+	//success message
+	c.JSON(200, gin.H{
+		"message": "Successfully logged admin",
+	})
+
+}
 
 // get pending drivers
 func GetPendingDrivers(c *gin.Context) {
@@ -39,7 +78,16 @@ func AcceptDrivers(c *gin.Context) {
 		})
 		return
 	}
-
+	var body struct {
+		Status   string `json:"status"`
+		UserName string `json:"user_name"`
+		Password string `json:"password"`
+	}
+	if err := c.Bind(&body); err != nil {
+		c.JSON(400, gin.H{
+			"error": "Failed to Bind Data",
+		})
+	}
 	// Set the email as the username and the password as the phone number
 	data := map[string]interface{}{
 		"status":    "Accepted",
